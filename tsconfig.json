@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "typeRoots": ["./node_modules/@types", "./global.d.ts"],
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -13,8 +14,11 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "baseUrl": "./src",
     "paths": {
-      "@/*": ["./src/*"]
+      "@ui": ["components/ui"],
+      "@layout": ["components/layout"],
+      "@shared": ["components/shared"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
