@@ -45,8 +45,9 @@ export function useWallet (){
 
 
           }
-          catch (err){
+          catch (err: any){
             console.error("Connection failed:", err)
+            console.log(err.code)
           }
      }, [])
 

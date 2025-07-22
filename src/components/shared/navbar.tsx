@@ -16,11 +16,11 @@ const Navbar = () => {
             <Wallet className="w-3 h-3 md:w-6 md:h-6 text-white" />
           </div>
           <div>
-            <h1 className="text-sm md:text-xl font-bold text-gray-900 dark:text-white">Token Scanner</h1>
+            <h1 className="text-sm md:text-xl font-bold text-gray-900 dark:text-white">C-Scan</h1>
           </div>
         </div>
         <div className="relative flex items-center">
-          <Button onClick={wallet?.connected ? () => { setShowDropDown(!showDropdown) } : () => { connectWallet() }} className="bg-blue-600 hover:bg-blue-700">
+          <Button onClick={wallet?.connected ? () => { setShowDropDown(!showDropdown) } : () => { connectWallet()}} className="bg-blue-600 hover:bg-blue-700">
             {/* <Wallet className="w-4 h-4 mr-2" /> */}
             <div className={`w-3 h-3 mr-1 ${wallet?.connected?"bg-[#36dc36]":"bg-red-500"} rounded-full`}></div>
             {wallet?.connected ? `${wallet?.address?.slice(0, 14)}...` : "Connect Wallet"}

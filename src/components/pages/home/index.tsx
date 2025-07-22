@@ -1,8 +1,11 @@
 import { Button } from "@ui"
 import { Wallet, Shield, Zap, BarChart3 } from "lucide-react"
 import { useWallet } from "hooks/wallet"
+import { walletAtom } from "utils/wallet"
+import { useRecoilValue } from "recoil"
 const HomePage = () =>{
 const {connectWallet} = useWallet()
+const wallet = useRecoilValue(walletAtom)
 
     return(
         <div className="flex flex-col items-center justify-center px-6 py-20">
@@ -10,15 +13,21 @@ const {connectWallet} = useWallet()
           <Wallet className="w-12 h-12 text-white" />
         </div>
 
-        <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6 text-center">Welcome to Token Scanner</h2>
+        <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6 text-center">Welcome to C-Scan</h2>
 
         <p className="text-lg text-gray-600 dark:text-gray-300 text-center max-w-2xl mb-12 leading-relaxed">
-          Connect your MetaMask wallet to view and analyze your ERC-20 tokens on Avalanche C-Chain. Get insights into
-          your portfolio with our advanced scanning tools.
+          Connect your MetaMask/Core wallet to view and analyze your ERC-20 tokens on the Avalanche C-Chain. Gain insights into
+          your portfolio with our advanced scanning tool.
         </p>
 
         <Button
-          onClick={()=>{connectWallet()}}
+          onClick={()=>
+          {
+            if(wallet === null){
+              connectWallet()
+            }
+          }
+          }
           size="lg"
           className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg rounded-xl mb-16"
         >
