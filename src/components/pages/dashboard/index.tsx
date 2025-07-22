@@ -10,6 +10,7 @@ import { useCallback, useEffect, useState } from "react"
 import { walletAtom } from "utils/wallet"
 import { useRecoilValue } from "recoil"
 import { ethers } from "ethers"
+import RedirectIfNotConnected from "../protected_routes/dashboardPR"
 import axios from "axios"
 const DashboardPage = () => {
   const [searchQuery, setSearchQuery] = useState<string>("")
@@ -51,16 +52,17 @@ const DashboardPage = () => {
     } catch (err) {
       console.error('Error fetching token balances:', err);
     }
-  }, [])
+  }, [wallet !== null])
 
   useEffect(
     () => {
       getTokenCA()
     }
-    , [])
+    , [wallet !== null])
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <RedirectIfNotConnected>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Main Content */}
       <main className="container mx-auto py-6 px-[20px]">
         {/* Portfolio Overview */}
@@ -127,14 +129,14 @@ const DashboardPage = () => {
                   placeholder="Search tokens by name or symbol..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 bg-white dark:bg-gray-800 text-gray-900 w-[50%] lg:w-[30%] h-[50px] !text-lg"
+                  className="pl-10 bg-white dark:bg-gray-800 text-gray-900 w-full sm:w-[50%] lg:w-[30%] h-[50px] !text-lg"
                 />
               </div></div>}
 
           {/* Token Grid/List */}
           <div className={viewMode === "grid" ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative" : " relative space-y-3"}>
             {loading ? [1, 2, 3, 4, 5, 6].map(() => (<TokenSkeleton />)) :
-              tokens.length === 0 ? (<p className="text-center text-2xl mt-24 absolute left-1/2 -translate-x-1/2 text-slate-400">You do not have any tokens</p>) :
+              tokens.length === 0 ? (<p className="w-full text-center text-lg sm:text-2xl sm:mt-24 absolute left-1/2 -translate-x-1/2 text-slate-400">You do not have any tokens</p>) :
 
                 (filteredTokens.map((token, index) => (
                   <TokenCard key={index} token={token} viewMode={viewMode} />
@@ -144,6 +146,8 @@ const DashboardPage = () => {
         </div>
       </main>
     </div>
+    </RedirectIfNotConnected>
+    
   )
 }
 export default DashboardPage

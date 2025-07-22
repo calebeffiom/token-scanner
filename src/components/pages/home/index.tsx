@@ -3,12 +3,14 @@ import { Wallet, Shield, Zap, BarChart3 } from "lucide-react"
 import { useWallet } from "hooks/wallet"
 import { walletAtom } from "utils/wallet"
 import { useRecoilValue } from "recoil"
+import RedirectIfConnected from "../protected_routes/loginPR"
 const HomePage = () =>{
 const {connectWallet} = useWallet()
 const wallet = useRecoilValue(walletAtom)
 
     return(
-        <div className="flex flex-col items-center justify-center px-6 py-20">
+       <RedirectIfConnected>
+         <div className="flex flex-col items-center justify-center px-6 py-20">
         <div className="w-24 h-24 bg-blue-600 rounded-3xl flex items-center justify-center mb-8">
           <Wallet className="w-12 h-12 text-white" />
         </div>
@@ -57,6 +59,7 @@ const wallet = useRecoilValue(walletAtom)
           </div>
         </div>
       </div>
+       </RedirectIfConnected>
     )
 }
 export default HomePage

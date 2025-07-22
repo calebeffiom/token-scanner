@@ -41,8 +41,6 @@ export function useWallet (){
               connected: true
             }
             setWallet(activeWallet)
-            router.push('/dashboard'); 
-
 
           }
           catch (err: any){
@@ -53,7 +51,7 @@ export function useWallet (){
 
      const disconnectWallet=()=>{
       setWallet(null)
-      router.push("/")
+      // router.push("/")
      }
 
         return{connectWallet, disconnectWallet}
