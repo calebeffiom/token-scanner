@@ -48,7 +48,6 @@ const DashboardPage = () => {
       setTotalTokens(`${tokenNumber}`)
       setLoading(false)
 
-      // console.log()
     } catch (err) {
       console.error('Error fetching token balances:', err);
     }
