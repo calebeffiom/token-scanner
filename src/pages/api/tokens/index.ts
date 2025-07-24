@@ -6,7 +6,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { walletAddress } = req.body
     const apiKey = process.env.MORALIS_API_KEY
 
-    const tokensUrl = `https://deep-index.moralis.io/api/v2.2/0x76eC5A0D3632b2133d9f1980903305B62678Fbd3/erc20?chain=avalanche`
+    const tokensUrl = `https://deep-index.moralis.io/api/v2.2/${walletAddress}/erc20?chain=avalanche`
 
     try {
       // Step 1: Fetch tokens from Moralis
