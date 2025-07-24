@@ -1,9 +1,23 @@
 import { Token } from "./tokenData";
+import { useState } from "react";
 import { Card, CardContent, Badge, Button } from "@ui";
 import { TrendingUp, Copy, ExternalLink, Check, X } from "lucide-react";
+import Link from "next/link";
 export default function TokenCard({ token, viewMode }: { token: Token; viewMode: "grid" | "list" }) {
   const usdValue = parseFloat(token.balance) * parseFloat(token.priceUsd)
   const formattedBalance = Number(token.balance).toFixed(4)
+  const [copied, setCopied] = useState(false)
+  const textToCopy = token.token_address
+  const handleCopy = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000) // Reset copied state after 2s
+    } catch (err) {
+      console.error("Failed to copy:", err)
+    }
+  }
+
   let displayValue = usdValue.toFixed(6)
     if (viewMode === "list") {
       return (
@@ -105,14 +119,17 @@ export default function TokenCard({ token, viewMode }: { token: Token; viewMode:
           </div>
   
           <div className="space-y-2">
-            <Button variant="outline" className="w-full justify-center bg-transparent">
+            <Button variant="outline" className="w-full justify-center bg-transparent"
+            onClick={()=>{handleCopy(textToCopy)}}>
               <Copy className="w-4 h-4 mr-2" />
               Copy Address
             </Button>
-            <Button variant="outline" className="w-full justify-center bg-transparent">
+           <Link href={`https://snowtrace.io/token/${textToCopy}`} target="blank" className="block">
+           <Button variant="outline" className="w-full justify-center bg-transparent">
               <ExternalLink className="w-4 h-4 mr-2" />
               View on Explorer
             </Button>
+           </Link>
           </div>
         </CardContent>
       </Card>
