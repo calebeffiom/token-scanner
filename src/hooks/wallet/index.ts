@@ -51,7 +51,6 @@ export function useWallet (){
 
      const disconnectWallet=()=>{
       setWallet(null)
-      // router.push("/")
      }
 
         return{connectWallet, disconnectWallet}

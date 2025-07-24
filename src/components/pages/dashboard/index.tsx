@@ -19,6 +19,7 @@ const DashboardPage = () => {
   const [tokens, setTokens] = useState<Token[]>([])
   const [totalTokens, setTotalTokens] = useState<string>("0")
   const [loading, setLoading] = useState<Boolean>(false)
+  const [portfolioTotal, setPortfolioTotal] = useState<string>("0")
 
   const filteredTokens = tokens.filter(
     (token) =>
@@ -42,11 +43,18 @@ const DashboardPage = () => {
         verified_contract: token.verified_contract,
         logo: token.logo,
         security_score: token.security_score,
+        priceUsd: token.priceUsd
       })
+
       )
+      const totalUsdValue = listOfTokens.reduce((acc:any, token:any) => {
+        const usdValue = parseFloat(ethers.formatUnits(token.balance, token.decimals)) * parseFloat(token.priceUsd);
+        return acc + usdValue;
+      }, 0);
       setTokens(parsedTokens)
       const tokenNumber = listOfTokens.length
       setTotalTokens(`${tokenNumber}`)
+      setPortfolioTotal(`${Math.floor(totalUsdValue).toLocaleString()}`)
       setLoading(false)
 
     } catch (err) {
@@ -72,16 +80,16 @@ const DashboardPage = () => {
           <div className="mb-8 p-6 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/50 dark:to-purple-950/50 rounded-2xl border border-gray-200 dark:border-gray-700">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Portfolio Overview</h2>
-              <div className="flex items-center space-x-2 text-green-600 dark:text-green-400">
+              {/* <div className="flex items-center space-x-2 text-green-600 dark:text-green-400">
                 <TrendingUp className="w-4 h-4" />
                 <span className="font-medium">+2.4% (24h)</span>
-              </div>
+              </div> */}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
                 <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Total Value</p>
-                <p className="text-3xl font-bold text-gray-900 dark:text-white">$7,576</p>
+                <p className="text-3xl font-bold text-gray-900 dark:text-white">$ {portfolioTotal}</p>
               </div>
               <div>
                 <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Total Tokens</p>

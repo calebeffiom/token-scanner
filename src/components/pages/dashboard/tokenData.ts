@@ -8,6 +8,7 @@ export interface Token {
   verified_contract: boolean
   logo: string
   security_score: string
+  priceUsd: string
 }
 //  export const mockTokens: Token[] = [
 //     {
